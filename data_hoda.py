@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from scipy import io
+from sklearn.neighbors import KNeighborsClassifier
 
 def load_hoda(training_sample_size=1000, test_sample_size=200, size=5):
     #load dataset
@@ -21,4 +22,14 @@ def load_hoda(training_sample_size=1000, test_sample_size=200, size=5):
     X_train = np.reshape(X_train_5by5, [-1,size**2])
     X_test = np.reshape(X_test_5by_5, [-1,size**2])
     
-    return X_train, y_train, X_test, y_test
+    return x_train, y_train, X_test, y_test
+
+
+
+def knn_classifier(k,x_train,y_train,x_test,y_test):
+    neigh=KNeighborsClassifier(n_neighbors=k)
+    neigh.fit(x_train,y_train)
+    acc=neigh.score(x_test,y_test)
+
+    return acc
+
